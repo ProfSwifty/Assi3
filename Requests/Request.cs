@@ -4,12 +4,20 @@ namespace Assi3
 {
     class Request : Command
     {
-        public Request(string route, int payload) {
+        public string Route { get; }
+        public int Payload { get; }
+        private Route Handler;
+
+        public Request(string route, int payload, Route handler)
+        {
             Route = route;
             Payload = payload;
+            Handler = handler;
         }
-        
-        public string Route;
-        public int Payload;
+
+        public int Execute()
+        {
+            return Handler?.HandleRequest(Payload) ?? 404;
+        }
     }
 }

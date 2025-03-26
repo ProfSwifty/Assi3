@@ -2,14 +2,20 @@ using System;
 
 namespace Assi3
 {
-    class Route
+    abstract class Route
     {
-        private Route Next;
-        private string Path;
+        protected Route Next;
+        protected string Path;
 
-        public Route(string path, Route next = null) {
-            this.Path = path;
-            this.Next = next;
+        protected Route(string path, Route next = null)
+        {
+            Path = path;
+            Next = next;
+        }
+
+        public virtual int HandleRequest(int payload)
+        {
+            return Next?.HandleRequest(payload) ?? 404;
         }
     }
 }
