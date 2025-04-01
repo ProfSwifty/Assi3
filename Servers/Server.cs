@@ -20,23 +20,20 @@ namespace Assi3
             pendingRequests.Enqueue(request);
         }
 
-        public void HandleRequest()
+        public Request HandleRequest()
         {
             if (pendingRequests.Count > 0)
             {
-                Request req = pendingRequests.Dequeue();
-                Console.WriteLine($"Response: {req.Execute()}");
+                return pendingRequests.Dequeue();
             }
-            else
-            {
-                Console.WriteLine("404");
-            }
+            return null;
         }
+
+
 
         public bool HasPendingRequests()
         {
             return pendingRequests.Count > 0;
         }
     }
-
 }

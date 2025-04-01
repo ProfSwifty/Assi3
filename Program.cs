@@ -15,6 +15,8 @@ namespace Assi3
             while ((command = Console.ReadLine()) != "quit")
             {
                 string[] args = command.Split(":");
+                Console.WriteLine();
+
                 switch (args[0])
                 {
                     case "help":
@@ -30,22 +32,29 @@ namespace Assi3
 
                     case "createserver":
                         Servers.Add(new Server());
-                        Console.WriteLine("Server created.");
+                        Console.WriteLine($"Created server {Servers.Count - 1}.");
                         break;
 
                     case "deleteserver":
                         if (int.TryParse(args[1], out int delId) && delId < Servers.Count)
                         {
                             Servers.RemoveAt(delId);
-                            Console.WriteLine("Server deleted.");
+                            Console.WriteLine($"Deleted server {delId}.");
                         }
                         else
                             Console.WriteLine("Invalid server ID.");
                         break;
 
                     case "listservers":
-                        for (int i = 0; i < Servers.Count; i++)
-                            Console.WriteLine($"Server {i}");
+                        if (Servers.Count == 0)
+                        {
+                            Console.WriteLine("No servers available.");
+                        }
+                        else
+                        {
+                            for (int i = 0; i < Servers.Count; i++)
+                                Console.WriteLine($"{i} Server");
+                        }
                         break;
 
                     case "new":
@@ -58,30 +67,51 @@ namespace Assi3
                             new MultiplyRoute("/mul",
                                 new Multiply4Route("/mul/4",
                                     new AddRoute("/add")))));
-                        Console.WriteLine("Request added.");
+                        Console.WriteLine($"Created request with data {payload} going to {args[1]}.");
                         break;
 
                     case "dispatch":
-                        ServerQuery query = new ServerQuery();
-                        foreach (var server in Servers)
+                        if (PendingRequests.Count == 0)
                         {
-                            if (!query.Visit(server) && PendingRequests.Count > 0)
+                            Console.WriteLine("No pending requests.");
+                            break;
+                        }
+
+                        ServerQuery query = new ServerQuery();
+                        for (int i = 0; i < Servers.Count; i++)
+                        {
+                            if (!query.Visit(Servers[i]) && PendingRequests.Count > 0)
                             {
-                                server.ReceiveRequest(PendingRequests.Dequeue());
-                                Console.WriteLine("Request dispatched.");
+                                Servers[i].ReceiveRequest(PendingRequests.Dequeue());
+                                Console.WriteLine($"Request dispatched to Server {i}.");
                                 break;
                             }
                         }
                         break;
 
+
+
                     case "server":
                         if (int.TryParse(args[1], out int servId) && servId < Servers.Count)
                         {
-                            Servers[servId].HandleRequest();
+                            var result = Servers[servId].HandleRequest();
+                            if (result == null)
+                            {
+                                Console.WriteLine("No work to do.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Path: {result.Route}\nInput: {result.Payload}\nResult: {result.Execute()}");
+                            }
                         }
                         else
+                        {
                             Console.WriteLine("Invalid server ID.");
+                        }
                         break;
+
+
+
 
                     default:
                         if (command != "")
@@ -90,6 +120,7 @@ namespace Assi3
                         }
                         break;
                 }
+                Console.WriteLine();
             }
         }
     }

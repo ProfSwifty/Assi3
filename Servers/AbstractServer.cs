@@ -4,7 +4,7 @@ namespace Assi3
 {
     interface AbstractServer
     {
-        void HandleRequest();
+        Request HandleRequest();
         void ReceiveRequest(Request request);
         bool HasPendingRequests();
     }
