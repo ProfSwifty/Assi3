@@ -8,6 +8,8 @@ using System;
 
 namespace Assi3
 {
+    //ServerQuery class, inherits Query
+    //implements Visit method using Server class objects/methods 
     class ServerQuery : Query
     {
         public bool Visit(Server server)

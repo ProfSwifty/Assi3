@@ -8,6 +8,7 @@ using System;
 
 namespace Assi3
 {
+    //Query interface, holds base definition of Visit method to be used in ServerQuery Class
     interface Query
     {
         bool Visit(Server server);

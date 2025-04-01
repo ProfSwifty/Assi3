@@ -8,9 +8,15 @@ using System;
 
 namespace Assi3
 {
+    //Multiply4Route, inherits Route. Implements the "/mul/4" request,
+    //which multiplies the inputted int by 4.
     class Multiply4Route : Route
     {
+        //Multiply4Route constructor, reuses the base Route constructor
         public Multiply4Route(string path, Route next = null) : base(path, next) { }
+
+        //HandleRequest override method, returns the int payload * 4,
+        //otherwise uses the base implementation of HandleRequest.
         public override int HandleRequest(int payload)
         {
             return Path == "/mul/4" ? payload * 4 : base.HandleRequest(payload);

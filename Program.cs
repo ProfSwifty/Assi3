@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 namespace Assi3
 {
+    //Program class, main method.
     class Program
     {
         static List<Server> Servers = new List<Server>();
@@ -25,6 +26,7 @@ namespace Assi3
 
                 switch (args[0])
                 {
+                    //displays help
                     case "help":
                         Console.WriteLine("help\t\t\tDisplay this menu");
                         Console.WriteLine("createserver\t\tCreate a new server.");
@@ -36,11 +38,13 @@ namespace Assi3
                         Console.WriteLine("quit\t\t\tQuit the application");
                         break;
 
+                    //creates a new server
                     case "createserver":
                         Servers.Add(new Server());
                         Console.WriteLine($"Created server {Servers.Count - 1}.");
                         break;
 
+                    //deletes a server
                     case "deleteserver":
                         if (int.TryParse(args[1], out int delId) && delId < Servers.Count)
                         {
@@ -51,6 +55,7 @@ namespace Assi3
                             Console.WriteLine("Invalid server ID.");
                         break;
 
+                    //lists all servers stored in local memory
                     case "listservers":
                         if (Servers.Count == 0)
                         {
@@ -63,6 +68,8 @@ namespace Assi3
                         }
                         break;
 
+
+                    //creates a new request to be pushed onto the server.
                     case "new":
                         if (args.Length < 3 || !int.TryParse(args[2], out int payload))
                         {
@@ -76,6 +83,7 @@ namespace Assi3
                         Console.WriteLine($"Created request with data {payload} going to {args[1]}.");
                         break;
 
+                    //dispatches a request to a server
                     case "dispatch":
                         if (PendingRequests.Count == 0)
                         {
@@ -96,7 +104,7 @@ namespace Assi3
                         break;
 
 
-
+                    //displays the results of the requests of a server
                     case "server":
                         if (int.TryParse(args[1], out int servId) && servId < Servers.Count)
                         {
@@ -118,7 +126,7 @@ namespace Assi3
 
 
 
-
+                    //default output if no case matches.
                     default:
                         if (command != "")
                         {

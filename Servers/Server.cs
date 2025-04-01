@@ -9,11 +9,14 @@ using System.Collections.Generic;
 
 namespace Assi3
 {
+    //Server class, inherits AbstractServer,
+    //holds the server information and processes various requests.
     class Server : AbstractServer
     {
         private Queue<Request> pendingRequests = new Queue<Request>();
         private Route handlerChain;
 
+        //Server constructor
         public Server()
         {
             handlerChain = new MultiplyRoute("/mul",
@@ -21,11 +24,15 @@ namespace Assi3
                     new AddRoute("/add")));
         }
 
+        //ReceiveRequest Method, takes in a request then
+        //enqueues it to the server's pending requests.
         public void ReceiveRequest(Request request)
         {
             pendingRequests.Enqueue(request);
         }
 
+        //HandleRequest method, called after a request
+        //has been completed, dequeues the current request.
         public Request HandleRequest()
         {
             if (pendingRequests.Count > 0)
@@ -36,7 +43,8 @@ namespace Assi3
         }
 
 
-
+        //HasPendingReuqests method, returns true or false depending
+        //on if the pendingRequests count is greater than 0.
         public bool HasPendingRequests()
         {
             return pendingRequests.Count > 0;

@@ -8,6 +8,7 @@ using System;
 
 namespace Assi3
 {
+    //AbstractServer Interface, Defines methods to be used within the server Class
     interface AbstractServer
     {
         Request HandleRequest();

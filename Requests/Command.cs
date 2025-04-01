@@ -8,6 +8,8 @@ using System;
 
 namespace Assi3
 {
+    //Command interface, defines the execute method
+    //that will be implemented in the request class.
     interface Command
     {
         int Execute();

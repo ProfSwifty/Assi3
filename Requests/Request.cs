@@ -8,12 +8,15 @@ using System;
 
 namespace Assi3
 {
+    //Request Class, implements Command, Holds the request, route and payload
+    //information to be passed to the Route type's HandleRequest method.
     class Request : Command
     {
         public string Route { get; }
         public int Payload { get; }
         private Route Handler;
 
+        //Request constructor
         public Request(string route, int payload, Route handler)
         {
             Route = route;
